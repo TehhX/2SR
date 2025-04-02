@@ -16,4 +16,8 @@ int randomInt(int min, int max) {
     return dist(getGenerator());
 }
 
+bool randomBool() {
+    return randomInt(0, 1);
+}
+
 }

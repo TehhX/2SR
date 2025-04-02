@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 enum class Suit {
     spades,
     clubs,
@@ -27,7 +29,27 @@ enum class Value {
 ,   max
 };
 
-struct Card {
+Suit randSuit();
+
+Value randValue();
+
+bool isFace(const Value& value);
+
+class Card {
+private:
     Suit suit {};
     Value value {};
+
+public:
+    Card(Suit suit, Value value);
+
+    const Suit& getSuit() const;
+
+    const Value& getValue() const;
 };
+
+std::string_view getSuitString(const Card& card);
+
+std::string_view getValueString(const Card& card);
+
+std::ostream& operator<<(std::ostream& out, const Card& card);

@@ -4,8 +4,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 # Source files
 set(SRC
+    src/2SRGame.cpp
+    src/card.cpp
     src/deck.cpp
-    src/playerDetails.cpp
+    src/player.cpp
     src/randomNumbers.cpp
 )
 

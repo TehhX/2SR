@@ -4,7 +4,7 @@
 
 #include <card.hpp>
 
-constexpr int deckSize { 52 };
+constexpr size_t deckSize { 52 };
 
 class Deck {
 private:
