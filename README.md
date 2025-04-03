@@ -20,4 +20,4 @@ Score is automatically tracked by this program, but if you play by hand you will
 
 ## Compiling and running
 
-This program uses CMake to compile and run for the most compatability. The CMakeLists.txt file is in the root folder, and handles the whole program. It is sufficient to run cmake from there when building.
+This program uses CMake to compile and run for the most compatability. The CMakeLists.txt file is in the root folder, and handles the whole program. It is sufficient to run cmake from there when building. If using VSCode, the CMake Tools extension is reccomended, but not required.
