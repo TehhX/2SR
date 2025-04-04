@@ -15,7 +15,7 @@ Suit randSuit() {
     return static_cast<Suit>(rnd::randomInt(0, static_cast<int>(Suit::max)));
 }
 
-Suit randSuit(const Suit& exclude) {
+Suit randSuit(Suit exclude) {
     std::vector<Suit> possibleSuits {
         static_cast<Suit>(0),
         static_cast<Suit>(1),
@@ -32,6 +32,35 @@ Value randValue() {
     return static_cast<Value>(rnd::randomInt(0, static_cast<int>(Value::max)));
 }
 
+Suit takeSuit(std::string_view input) {
+    if      (input == getSuitString(Suit::spades))   return Suit::spades;
+    else if (input == getSuitString(Suit::clubs))    return Suit::clubs;
+    else if (input == getSuitString(Suit::diamonds)) return Suit::diamonds;
+    else if (input == getSuitString(Suit::hearts))   return Suit::hearts;
+
+    else
+        throw "Bad value passed to takeSuit.\n";
+}
+
+Value takeValue(std::string_view input) {
+    if      (input == getValueString(Value::ace))   return Value::ace;
+    else if (input == getValueString(Value::two))   return Value::two;
+    else if (input == getValueString(Value::three)) return Value::three;
+    else if (input == getValueString(Value::four))  return Value::four;
+    else if (input == getValueString(Value::five))  return Value::five;
+    else if (input == getValueString(Value::six))   return Value::six;
+    else if (input == getValueString(Value::seven)) return Value::seven;
+    else if (input == getValueString(Value::eight)) return Value::eight;
+    else if (input == getValueString(Value::nine))  return Value::nine;
+    else if (input == getValueString(Value::ten))   return Value::ten;
+    else if (input == getValueString(Value::jack))  return Value::jack;
+    else if (input == getValueString(Value::queen)) return Value::queen;
+    else if (input == getValueString(Value::king))  return Value::king;
+
+    else
+        throw "Bad value passed to takeValue.\n";
+}
+
 const Suit& Card::getSuit() const {
     return suit;
 }
@@ -40,26 +69,28 @@ const Value& Card::getValue() const {
     return value;
 }
 
-bool isFace(const Value& value) {
+bool isFace(Value value) {
     return value >= Value::jack;
 }
 
-std::string_view getSuitString(const Card& card) {
-    switch(card.getSuit()) {
-
+std::string_view getSuitString(Suit suit) {
+    switch(suit) {
     case Suit::spades:   return "spades";
     case Suit::clubs:    return "clubs";
     case Suit::diamonds: return "diamonds";
     case Suit::hearts:   return "hearts";
 
-    default: throw "Bad suit passed to get().\n";
-
+    default:
+        throw "Bad suit passed to getSuitString.\n";
     }
 }
 
-std::string_view getValueString(const Card& card) {
-    switch(card.getValue()) {
+std::string_view getSuitString(const Card& card) {
+    return getSuitString(card.getSuit());
+}
 
+std::string_view getValueString(Value value) {
+    switch(value) {
     case Value::ace:   return "ace";
     case Value::two:   return "two";
     case Value::three: return "three";
@@ -74,9 +105,13 @@ std::string_view getValueString(const Card& card) {
     case Value::queen: return "queen";
     case Value::king:  return "king";
 
-    default: throw "Bad value passed to get().\n";
-
+    default:
+        throw "Bad value passed to getValueString.\n";
     }
+}
+
+std::string_view getValueString(const Card& card) {
+    return getValueString(card.getValue());
 }
 
 std::ostream& operator<<(std::ostream& out, const Card& card) {

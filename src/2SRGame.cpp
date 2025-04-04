@@ -1,33 +1,56 @@
 #include <iostream>
+#include <memory>
 
 #include <deck.hpp>
 #include <player.hpp>
 
-bool moreThanOneTrial { false };
-constexpr unsigned int trials { 1'000'000 };
+unsigned int trials;
 
-bool cliOne;
-bool cliTwo;
+bool playGame(Player& p1, Player& p2) {
+    Deck deck {};
 
-bool playGame(Player& playerOne, Player& playerTwo) {
-    
+    constexpr int endScore { 600 };
+    while (!(p1.getScore() < endScore || p2.getScore() < endScore || deck.isEmpty())) {
+        p1.takeTurn(deck.takeCard());
+        p2.takeTurn(deck.takeCard());
+    }
+
+    return p1.getScore() > p2.getScore();
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3)
-        throw "Unexpected arguments. Need to know if player one is real, and if player two is real i.e. 1 0.\n";
+    if (argc != 4)
+        throw "Unexpected arguments. Need: numTrials cliOne cliTwo\n";
 
-    cliOne = argv[1];
-    cliTwo = argv[2];
+    bool cliOne { *argv[2] == '1' };
+    bool cliTwo { *argv[3] == '1' };
 
-    if (cliOne + cliTwo == 0) // Both CPU players
-        moreThanOneTrial = true;
+    trials = std::stoi(argv[1]);
+    int wins { 0 };
 
-    int trialInd { 0 };
+    unsigned int trialInd { 0 };
     if (trials == 0)
-        return;
+        return -1;
 
     while (trialInd++ < trials) {
+        Player* p1;
+        Player* p2;
+        
+        if (cliOne)
+            p1 = new CLIPlayer {};
+        else
+            p1 = new CPUPlayer {};
+        
+        if (cliTwo)
+            p2 = new CLIPlayer {};
+        else
+            p2 = new CPUPlayer {};
 
+        wins += playGame(*p1, *p2);
+
+        delete p1;
+        delete p2;
     }
+
+    std::cout << wins << '\n';
 }

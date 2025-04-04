@@ -15,4 +15,5 @@ public:
 
     Card takeCard();
     void reset();
+    bool isEmpty() const;
 };

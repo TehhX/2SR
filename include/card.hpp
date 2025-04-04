@@ -31,14 +31,20 @@ enum class Value {
 
 Suit randSuit();
 
+Suit randSuit(Suit exclude);
+
 Value randValue();
 
-bool isFace(const Value& value);
+Suit takeSuit(std::string_view input);
+
+Value takeValue(std::string_view input);
+
+bool isFace(Value value);
 
 class Card {
 private:
-    Suit suit {};
-    Value value {};
+    Suit suit;
+    Value value;
 
 public:
     Card(Suit suit, Value value);
@@ -48,7 +54,11 @@ public:
     const Value& getValue() const;
 };
 
+std::string_view getSuitString(Suit suit);
+
 std::string_view getSuitString(const Card& card);
+
+std::string_view getValueString(Value value);
 
 std::string_view getValueString(const Card& card);
 

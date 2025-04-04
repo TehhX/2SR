@@ -8,6 +8,12 @@ Deck::Deck() {
     reset();
 }
 
+Card Deck::takeCard() {
+    Card card { deck.back() };
+    deck.pop_back();
+    return card;
+}
+
 void Deck::reset() {
     deck.clear();
 
@@ -18,8 +24,6 @@ void Deck::reset() {
     std::shuffle(deck.begin(), deck.end(), rnd::getGenerator());
 }
 
-Card Deck::takeCard() {
-    Card card { deck.back() };
-    deck.pop_back();
-    return card;
+bool Deck::isEmpty() const {
+    return deck.empty();
 }
