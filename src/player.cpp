@@ -48,6 +48,9 @@ CLIPlayer::CLIPlayer() {
         secondarySuit = takeSuit(in);
     }
 
+    if (primarySuit == secondarySuit)
+        throw "Primary suit cannot be equal to secondary suit.\n";
+
     {
         std::cout << "Enter royal: ";
         std::string in;

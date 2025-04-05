@@ -1,8 +1,8 @@
 # VSCode
 .vscode/
 
-# Build folders
-**/build/
+# Build folder
+build/
 
 # Scripts
 *.sh
