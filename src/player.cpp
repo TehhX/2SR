@@ -26,7 +26,7 @@ int Player::getScore() const {
 CPUPlayer::CPUPlayer() {
     primarySuit = randSuit();
     secondarySuit = randSuit(primarySuit);
-    royal = randValue();
+    royal = randRoyal();
 }
 
 void CPUPlayer::takeTurn(const Card& card) {

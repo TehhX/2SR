@@ -10,7 +10,7 @@ bool playGame(Player* p1, Player* p2) {
     Deck deck {};
 
     constexpr int endScore { 600 };
-    while (!(p1->getScore() < endScore || p2->getScore() < endScore || deck.isEmpty())) {
+    while (true) {
         p1->takeTurn(deck.takeCard());
         p2->takeTurn(deck.takeCard());
     }

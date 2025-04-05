@@ -33,7 +33,7 @@ Suit randSuit();
 
 Suit randSuit(Suit exclude);
 
-Value randValue();
+Value randRoyal();
 
 Suit takeSuit(std::string_view input);
 

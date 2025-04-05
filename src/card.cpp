@@ -28,8 +28,8 @@ Suit randSuit(Suit exclude) {
     return possibleSuits[rnd::randomInt(0, 2)];
 }
 
-Value randValue() {
-    return static_cast<Value>(rnd::randomInt(0, static_cast<int>(Value::max)));
+Value randRoyal() {
+    return static_cast<Value>(rnd::randomInt(static_cast<int>(Value::jack), static_cast<int>(Value::king)));
 }
 
 Suit takeSuit(std::string_view input) {
