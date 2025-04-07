@@ -12,9 +12,9 @@ This is a CLI based implementation of my game Two Suits and a Royal (2SR) made i
 
 |                    |   Unchosen Suit |  Secondary Suit |    Primary Suit |
 |-------------------:|----------------:|----------------:|----------------:|
-|        **Numeral** |      Card Value |   2x Card Value |   4x Card Value |
-| **Unchosen Royal** | Same as Numeral | Same as Numeral | Same as Numeral |
-|   **Chosen Royal** |              25 |              75 |             150 |
+|        **Numeral** | CV (Card Value) |           2x CV |           4x CV |
+| **Unchosen Royal** |              10 |              20 |              40 |
+|   **Chosen Royal** |              50 |             100 |             200 |
 
 Score is automatically tracked by this program, but if you play by hand you will need a scoresheet or similar.
 
