@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 
 #include <deck.hpp>
 #include <randomNumbers.hpp>
