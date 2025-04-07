@@ -31,3 +31,5 @@ public:
 
     virtual void takeTurn(const Card& card) override;
 };
+
+Player* createPlayer(bool cli);

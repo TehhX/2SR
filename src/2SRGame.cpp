@@ -1,13 +1,10 @@
 #include <iostream>
-#include <memory>
 
 #include <deck.hpp>
 #include <player.hpp>
 
-unsigned int trials;
-
-bool shouldEnd(Player* p1, Player* p2, Deck& deck) {
-    constexpr int endScore { 300 };
+bool shouldEnd(Player* p1, Player* p2, const Deck& deck) {
+    constexpr unsigned short endScore { 300 };
 
     return (p1->getScore() > endScore) || (p2->getScore() > endScore) || (deck.isEmpty());
 }
@@ -28,16 +25,14 @@ bool playGame(Player* p1, Player* p2) {
     return p1->getScore() > p2->getScore();
 }
 
-Player* createPlayer(bool cli) {
-    return (cli ? static_cast<Player*>(new CLIPlayer {}) : static_cast<Player*>(new CPUPlayer {}));
-}
+int main(int argc, char* argv[]) {
+    try {
 
-int main(int argc, char* argv[]) { try { // Try/catch for entire main(...)
     if (argc != 4)
         throw "Unexpected arguments. Need: numTrials cliOne cliTwo\n";
 
     // CLI Arguments
-    trials = std::stoi(argv[1]);
+    unsigned int trials = std::stoi(argv[1]);
     if (trials == 0)
         throw "Trials cannot be zero.\n";
 
@@ -58,11 +53,14 @@ int main(int argc, char* argv[]) { try { // Try/catch for entire main(...)
         delete p2;
     }
 
-    std::cout << "You " << (p1Wins > trials / 2 ? "won" : "lost") << ' ' << p1Wins << " to " << trials - p1Wins << '\n';
-} catch (const char e[]) {
-    std::cerr << e;
-    return -1;
-} catch (...) {
-    std::cerr << "Unknown error.\n";
-    return -2;
-}}
+    std::cout << "You " << (p1Wins > trials / 2 ? "won" : "lost") << ' ' << p1Wins << " to " << trials - p1Wins << '\n' <<
+                 "That is a ratio of " << p1Wins / static_cast<float>(trials / 2) << " to 1.\n";
+
+    } catch (const char e[]) {
+        std::cerr << e;
+        return -1;
+    } catch (...) {
+        std::cerr << "Unknown error.\n";
+        return -2;
+    }
+}

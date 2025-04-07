@@ -73,3 +73,7 @@ void CLIPlayer::takeTurn(const Card& card) {
     std::cout << "You got a " << card << ".\n"
               << "Your score is now " << score << "\n\n";
 }
+
+Player* createPlayer(bool cli) {
+    return (cli ? static_cast<Player*>(new CLIPlayer {}) : static_cast<Player*>(new CPUPlayer {}));
+}
