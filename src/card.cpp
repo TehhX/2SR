@@ -23,7 +23,7 @@ Suit randSuit(Suit exclude) {
         static_cast<Suit>(3)
     };
 
-    possibleSuits.erase(possibleSuits.begin() + static_cast<int>(exclude) - 1);
+    possibleSuits.erase(possibleSuits.begin() + static_cast<int>(exclude));
 
     return possibleSuits[rnd::randomInt(0, 2)];
 }

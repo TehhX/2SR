@@ -43,14 +43,11 @@ int main(int argc, char* argv[]) {
     int p1Wins { 0 };
 
     unsigned int trialIndex { 0 };
-    while (trialIndex++ < trials) {       
+    while (trialIndex++ < trials) {
         p1 = createPlayer(cliOne);
         p2 = createPlayer(cliTwo);
 
         p1Wins += playGame(p1, p2);
-
-        delete p1;
-        delete p2;
     }
 
     std::cout << "You " << (p1Wins > trials / 2 ? "won" : "lost") << ' ' << p1Wins << " to " << trials - p1Wins << '\n' <<
