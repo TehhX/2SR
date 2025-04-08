@@ -10,7 +10,7 @@ bool shouldEnd(Player* p1, Player* p2, const Deck& deck) {
     return (p1->getScore() > endScore) || (p2->getScore() > endScore) || (deck.isEmpty());
 }
 
-bool playGame(Player* p1, Player* p2) {
+bool playGame(Player* p1, Player* p2, const unsigned long long int& trialIndex) {
     Deck deck {};
 
     while (true) {
@@ -50,7 +50,7 @@ try {
         p1 = createPlayer(numPlayers > 0);
         p2 = createPlayer(numPlayers > 1);
 
-        p1Wins += playGame(p1, p2);
+        p1Wins += playGame(p1, p2, trialIndex);
     }
 
     std::cout << "You " << (p1Wins > trials / 2 ? "won" : "lost") << ' ' << p1Wins << " to " << trials - p1Wins << '\n' <<

@@ -9,7 +9,7 @@ set(SRC
     src/deck.cpp
     src/player.cpp
     src/randomNumbers.cpp
-    src/trialLogger.cpp
+    src/logger.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SRC})
