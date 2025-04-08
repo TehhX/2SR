@@ -5,6 +5,7 @@
 
 #include <player.hpp>
 #include <deck.hpp>
+#include <card.hpp>
 
 namespace Logger {
 
@@ -16,26 +17,34 @@ struct Move {
     int totalPoints;
 };
 
-struct Game {
+class Trial {
     std::vector<Move> moves;
-};
-
-class Holder {
-    std::vector<Game> gameList;
+    Player* const p1;
+    Player* const p2;
 
 public:
-    inline Holder() {}
+    Trial(Player* const p1, Player* const p2);
 
-    void addGame(const Game& game);
+    const Move& getMove(int index) const;
 
-    void retrieveList() const;
+    Player* getP1() const;
+    Player* getP2() const;
+
+    Trial& addMove(const Move& move);
+
+    ~Trial();
 };
 
-class Writer {
+class Simulation {
     std::ofstream outFile;
+    std::vector<Trial> trials;
 
 public:
-    inline Writer() {}
+    Simulation();
+
+    Simulation& addTrial(const Trial& trial);
+
+    ~Simulation() noexcept(false);
 };
 
 }

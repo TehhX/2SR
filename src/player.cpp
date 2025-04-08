@@ -4,10 +4,13 @@
 #include <player.hpp>
 
 int Player::getMultiplier(const Card& card) const {
+    assert(card.getValue() != Value::max && card.getSuit() != Suit::max);
+
     int score { 1 };
-    
-    if (card.getValue() < Value::jack || card.getValue() != royal)
+    if (card.getValue() < Value::jack)
         score += static_cast<int>(card.getValue());
+    else if (card.getValue() != royal)
+        score += 10;
     else
         score += 25;
     
@@ -70,8 +73,7 @@ void CLIPlayer::takeTurn(const Card& card) {
     getline(std::cin, bin);
     } // Scope to delete bin.
 
-    std::cout << "You got a " << card << ".\n"
-              << "Your score is now " << score << "\n\n";
+    std::cout << "You got a " << card << ". Your score is now " << score << ".\n\n";
 }
 
 Player* createPlayer(bool cli) {

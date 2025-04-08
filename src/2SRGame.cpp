@@ -1,8 +1,9 @@
 #include <iostream>
 
-#include <inputExceptions.hpp>
+#include <2SRException.hpp>
 #include <deck.hpp>
 #include <player.hpp>
+#include <logger.hpp>
 
 bool shouldEnd(Player* p1, Player* p2, const Deck& deck) {
     constexpr unsigned short endScore { 300 };
@@ -17,7 +18,7 @@ bool playGame(Player* p1, Player* p2, const unsigned long long int& trialIndex) 
         if (shouldEnd(p1, p2, deck))
             break;
         p1->takeTurn(deck.takeCard());
-        
+
         if (shouldEnd(p1, p2, deck))
             break;
         p2->takeTurn(deck.takeCard());
@@ -29,18 +30,18 @@ bool playGame(Player* p1, Player* p2, const unsigned long long int& trialIndex) 
 int main(int argc, char* argv[]) {
 try {
     if (argc != 3)
-        throw TSRInputException("Unexpected arguments, need: numTrials numPlayers.");
+        throw CLIInputException("Unexpected arguments, need: numTrials numPlayers.");
     
     if (argv[1][0] == ' ')
-        throw TSRInputException("Remove all whitespace in CLI arguments.");
+        throw CLIInputException("Remove all whitespace in CLI arguments.");
 
     auto trials { static_cast<unsigned long long int>(std::stoull(argv[1])) };
     if (trials < 1 || trials % 1 != 0 || argv[1][0] == '-' || argv[1][0] == ' ')
-        throw TSRInputException("Bad numTrials, must be { nT in N | 1 <= nT <= ULL_MAX } and without whitespace.");
+        throw CLIInputException("Bad numTrials, must be { nT in N | 1 <= nT <= ULL_MAX } and without whitespace.");
 
     auto numPlayers { static_cast<unsigned short int>(std::stoi(argv[2])) };
     if (numPlayers < 0 || 2 < numPlayers)
-        throw TSRInputException("Bad numPlayers, must be { nP in W | 0 <= nP <= 2 }.");
+        throw CLIInputException("Bad numPlayers, must be { nP in W | 0 <= nP <= 2 }.");
 
     Player *p1, *p2;
     
@@ -57,8 +58,8 @@ try {
                  "That is a ratio of " << p1Wins / static_cast<float>(trials / 2) << " to 1.\n";
     
     return 0;
-} catch (const TSRInputException& tsrie) {
-    std::cerr << "2SR command line input error occured: " << tsrie.what() << '\n';
+} catch (const CLIInputException& cliie) {
+    std::cerr << "2SR command line input error occured: " << cliie.what() << '\n';
     return -1;
 } catch (const std::exception& stde) {
     std::cerr << "Standard library exception occured: " << stde.what() << '\n';
