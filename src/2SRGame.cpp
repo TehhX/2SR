@@ -26,13 +26,12 @@ bool playGame(Player* p1, Player* p2) {
 }
 
 int main(int argc, char* argv[]) {
-    try {
+    try { // Try/catch block for entire program:
 
     if (argc != 4)
         throw "Unexpected arguments. Need: numTrials cliOne cliTwo\n";
 
-    // CLI Arguments
-    unsigned int trials = std::stoi(argv[1]);
+    unsigned long trials = std::stoi(argv[1]);
     if (trials == 0)
         throw "Trials cannot be zero.\n";
 
@@ -40,7 +39,7 @@ int main(int argc, char* argv[]) {
     bool cliTwo { *argv[3] == '1' };
 
     Player *p1, *p2;
-    int p1Wins { 0 };
+    unsigned long p1Wins { 0 };
 
     unsigned int trialIndex { 0 };
     while (trialIndex++ < trials) {
