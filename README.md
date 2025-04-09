@@ -6,7 +6,7 @@ This is a CLI based implementation of my game Two Suits and a Royal (2SR) made i
 
 * This game takes two players and a standard 52-card deck of cards (jokerless)
 * Both players pick a primary and secondary suit (Hearts, diamonds, spades or clubs) and a Royal (Jack, Queen, King).
-* Both players take turns drawing cards until one of them reaches 600 points, or until the deck is exhausted.
+* Both players take turns drawing cards until one of them reaches 300 points, or until the deck is exhausted.
 * If the deck is exhausted, the player with the most points is declared the winner.
 * The players then tally up their points according to the following table:
 
@@ -18,6 +18,10 @@ This is a CLI based implementation of my game Two Suits and a Royal (2SR) made i
 
 Score is automatically tracked by this program, but if you play by hand you will need a scoresheet or similar.
 
-## Compiling and running
+## Compiling
 
-This program uses CMake to compile and run for the most compatability. The CMakeLists.txt file is in the root folder, and handles the whole program. It is sufficient to run cmake from there when building. If using VSCode, the CMake Tools extension is reccomended, but not required.
+This program uses CMake to compile and run for the most compatability. The CMakeLists.txt file is in the root folder, and handles the whole program. It is sufficient to run cmake from there when building. If using VSCode, the [CMake Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools) extension is reccomended, but not required.
+
+## Running
+
+Execute the output file using either ```./2SR``` or ```2SR.exe``` (assuming a file name of 2SR) in your terminal, appending the amount of trials you want to run followed by the amount of real players. An example execution in the Windows command line is as follows: ```C:\2SR\build> 2SR.exe 100 0``` This runs 100 trials with no real players.
