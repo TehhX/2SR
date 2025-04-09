@@ -13,6 +13,7 @@ private:
 public:
     Deck();
 
+    const Card& peekCard() const;
     Card takeCard();
     void reset();
     bool isEmpty() const;

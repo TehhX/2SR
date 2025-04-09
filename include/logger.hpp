@@ -25,14 +25,12 @@ class Trial {
 public:
     Trial(Player* const p1, Player* const p2);
 
-    const Move& getMove(int index) const;
+    const std::vector<Move>& getMoves() const;
 
     Player* getP1() const;
     Player* getP2() const;
 
     Trial& addMove(const Move& move);
-
-    ~Trial();
 };
 
 class Simulation {
@@ -43,6 +41,8 @@ public:
     Simulation();
 
     Simulation& addTrial(const Trial& trial);
+
+    std::string getRow(const Logger::Move& move) const;
 
     ~Simulation() noexcept(false);
 };

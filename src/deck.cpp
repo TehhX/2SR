@@ -9,6 +9,10 @@ Deck::Deck() {
     reset();
 }
 
+const Card& Deck::peekCard() const {
+    return deck.back();
+}
+
 Card Deck::takeCard() {
     Card card { deck.back() };
     deck.pop_back();

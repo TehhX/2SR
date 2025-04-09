@@ -5,6 +5,8 @@
 #include <player.hpp>
 #include <logger.hpp>
 
+Logger::Simulation simul {};
+
 bool shouldEnd(Player* p1, Player* p2, const Deck& deck) {
     constexpr unsigned short endScore { 300 };
 
@@ -12,18 +14,41 @@ bool shouldEnd(Player* p1, Player* p2, const Deck& deck) {
 }
 
 bool playGame(Player* p1, Player* p2, const unsigned long long int& trialIndex) {
+    int moveNum { 1 };
+    Logger::Trial trial { p1, p2 };
     Deck deck {};
 
     while (true) {
         if (shouldEnd(p1, p2, deck))
             break;
+        Logger::Move p1Move {
+            moveNum++,
+            true,
+            deck.peekCard().getSuit(),
+            deck.peekCard().getValue()
+        };
+
         p1->takeTurn(deck.takeCard());
+
+        p1Move.totalPoints = p1->getScore();
+        trial.addMove(p1Move);
 
         if (shouldEnd(p1, p2, deck))
             break;
+        Logger::Move p2Move {
+            moveNum++,
+            false,
+            deck.peekCard().getSuit(),
+            deck.peekCard().getValue()
+        };
+
         p2->takeTurn(deck.takeCard());
+
+        p2Move.totalPoints = p2->getScore();
+        trial.addMove(p2Move);
     }
 
+    simul.addTrial(trial);
     return p1->getScore() > p2->getScore();
 }
 
@@ -53,9 +78,6 @@ try {
 
         p1Wins += playGame(p1, p2, trialIndex);
     }
-
-    std::cout << "You " << (p1Wins > trials / 2 ? "won" : "lost") << ' ' << p1Wins << " to " << trials - p1Wins << '\n' <<
-                 "That is a ratio of " << p1Wins / static_cast<float>(trials / 2) << " to 1.\n";
     
     return 0;
 } catch (const CLIInputException& cliie) {

@@ -1,9 +1,12 @@
 # VSCode
 .vscode/
 
-# Build folder
+# Build Folder
 build/
 
 # Scripts
 *.sh
 *.bat
+
+# Logger Output
+log.csv

@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include <2SRException.hpp>
 #include <logger.hpp>
 
@@ -6,8 +8,8 @@ namespace Logger {
 Trial::Trial(Player* const p1, Player* const p2)
 : p1 { p1 }, p2 { p2 } {}
 
-const Move& Trial::getMove(int index) const {
-    return moves[index];
+const std::vector<Move>& Trial::getMoves() const {
+    return moves;
 }
 
 Player* Trial::getP1() const {
@@ -23,11 +25,6 @@ Trial& Trial::addMove(const Move& move) {
     return *this;
 }
 
-Trial::~Trial() {
-    delete p1;
-    delete p2;
-}
-
 Simulation::Simulation() {
     outFile.open("log.csv");
 
@@ -40,7 +37,28 @@ Simulation& Simulation::addTrial(const Trial& trial) {
     return *this;
 }
 
+std::string Simulation::getRow(const Logger::Move& move) const {
+    std::stringstream out {};
+
+    out << move.roundNum << ',' <<
+       "Player" << (move.playerOne ? "One" : "Two") << ',' <<
+       getSuitString(move.suit) << ',' <<
+       getValueString(move.value) << ',' <<
+       move.totalPoints << '\n';
+
+    return out.str();
+}
+
 Simulation::~Simulation() noexcept(false) {
+    for (const auto& trial : trials) {
+        outFile << "RoundNum,Player,Suit,Value,TotalPoints\n";
+
+        for (const auto& move : trial.getMoves())
+            outFile << getRow(move);
+
+        outFile << std::endl;
+    }
+
     outFile.close();
 
     if (outFile.fail())
