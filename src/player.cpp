@@ -6,9 +6,9 @@
 int Player::getMultiplier(const Card& card) const {
     assert(card.getValue() != Value::max && card.getSuit() != Suit::max);
 
-    int score { 1 };
+    int score { 0 };
     if (card.getValue() < Value::jack)
-        score += static_cast<int>(card.getValue());
+        score += static_cast<int>(card.getValue()) + 1;
     else if (card.getValue() != royal)
         score += 10;
     else

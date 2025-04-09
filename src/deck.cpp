@@ -26,7 +26,7 @@ void Deck::reset() {
         for (int valueIndex { 0 }; valueIndex < static_cast<int>(Value::max); valueIndex++)
             deck.push_back({ static_cast<Suit>(suitIndex), static_cast<Value>(valueIndex) });
 
-    std::shuffle(deck.begin(), deck.end(), rnd::getGenerator());
+    std::shuffle(deck.begin(), deck.end(), rnd::generator());
 }
 
 bool Deck::isEmpty() const {

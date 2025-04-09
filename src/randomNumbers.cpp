@@ -2,7 +2,7 @@
 
 namespace rnd {
 
-std::mt19937& getGenerator() {
+std::mt19937& generator() {
     static std::random_device rd {};
     static std::seed_seq ss { rd(), rd(), rd(), rd(), rd(), rd() };
     static std::mt19937 gen { ss };
@@ -10,14 +10,14 @@ std::mt19937& getGenerator() {
     return gen;
 }
 
-int randomInt(int min, int max) {
+int integer(int min, int max) {
     std::uniform_int_distribution dist { min, max };
 
-    return dist(getGenerator());
+    return dist(generator());
 }
 
-bool randomBool() {
-    return randomInt(0, 1);
+bool boolean() {
+    return integer(0, 1);
 }
 
 }

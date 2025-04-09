@@ -3,6 +3,7 @@
 
 #include <card.hpp>
 #include <randomNumbers.hpp>
+#include <2SRException.hpp>
 
 Card::Card(Suit suit, Value value)
 : suit { suit }, value { value }
@@ -12,7 +13,7 @@ Card::Card(Suit suit, Value value)
 }
 
 Suit randSuit() {
-    return static_cast<Suit>(rnd::randomInt(0, static_cast<int>(Suit::max)));
+    return static_cast<Suit>(rnd::integer(0, static_cast<int>(Suit::max)));
 }
 
 Suit randSuit(Suit exclude) {
@@ -22,14 +23,15 @@ Suit randSuit(Suit exclude) {
         static_cast<Suit>(2),
         static_cast<Suit>(3)
     };
+#include <cstdlib>
 
     possibleSuits.erase(possibleSuits.begin() + static_cast<int>(exclude));
 
-    return possibleSuits[rnd::randomInt(0, 2)];
+    return possibleSuits[rnd::integer(0, 2)];
 }
 
 Value randRoyal() {
-    return static_cast<Value>(rnd::randomInt(static_cast<int>(Value::jack), static_cast<int>(Value::king)));
+    return static_cast<Value>(rnd::integer(static_cast<int>(Value::jack), static_cast<int>(Value::king)));
 }
 
 Suit takeSuit(std::string_view input) {
@@ -39,7 +41,7 @@ Suit takeSuit(std::string_view input) {
     else if (input == getSuitString(Suit::hearts))   return Suit::hearts;
 
     else
-        throw "Bad value passed to takeSuit.\n";
+        throw CardConversionException("Bad suit passed to takeSuit(std::string_view).");
 }
 
 Value takeValue(std::string_view input) {
@@ -58,7 +60,7 @@ Value takeValue(std::string_view input) {
     else if (input == getValueString(Value::king))  return Value::king;
 
     else
-        throw "Bad value passed to takeValue.\n";
+        throw CardConversionException("Bad value passed to takeValue(std::string_view).");
 }
 
 const Suit& Card::getSuit() const {
@@ -81,7 +83,7 @@ std::string_view getSuitString(Suit suit) {
     case Suit::hearts:   return "hearts";
 
     default:
-        throw "Bad suit passed to getSuitString.\n";
+        throw CardConversionException("Bad suit passed to getSuitString(Suit).");
     }
 }
 
@@ -106,7 +108,7 @@ std::string_view getValueString(Value value) {
     case Value::king:  return "king";
 
     default:
-        throw "Bad value passed to getValueString.\n";
+        throw CardConversionException("Bad value passed to getValueString(Value).");
     }
 }
 
