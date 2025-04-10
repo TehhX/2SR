@@ -11,7 +11,6 @@ namespace Logger {
 
 struct Move {
     int roundNum;
-    bool playerOne;
     Suit suit;
     Value value;
     int totalPoints;
@@ -27,15 +26,12 @@ public:
 
     const std::vector<Move>& getMoves() const;
 
-    Player* getP1() const;
-    Player* getP2() const;
-
     Trial& addMove(const Move& move);
 };
 
 class Simulation {
     std::ofstream outFile;
-    std::vector<Trial> trials;
+    std::vector<Trial> trials {{}};
 
 public:
     Simulation();

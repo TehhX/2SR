@@ -12,14 +12,6 @@ const std::vector<Move>& Trial::getMoves() const {
     return moves;
 }
 
-Player* Trial::getP1() const {
-    return p1;
-}
-
-Player* Trial::getP2() const {
-    return p2;
-}
-
 Trial& Trial::addMove(const Move& move) {
     moves.push_back(move);
     return *this;
@@ -41,7 +33,6 @@ std::string Simulation::getRow(const Logger::Move& move) const {
     std::stringstream out {};
 
     out << move.roundNum << ',' <<
-       "Player" << (move.playerOne ? "One" : "Two") << ',' <<
        getSuitString(move.suit) << ',' <<
        getValueString(move.value) << ',' <<
        move.totalPoints << '\n';
@@ -51,7 +42,7 @@ std::string Simulation::getRow(const Logger::Move& move) const {
 
 Simulation::~Simulation() noexcept(false) {
     for (const auto& trial : trials) {
-        outFile << "RoundNum,Player,Suit,Value,TotalPoints\n";
+        outFile << "RoundNum,Suit,Value,TotalPoints\n";
 
         for (const auto& move : trial.getMoves())
             outFile << getRow(move);

@@ -27,7 +27,6 @@ void playGame(Player* p1, Player* p2, const trialInt& trialIndex) {
     
             trial.addMove({
                 moveNum++,
-                moveNum % 2 == 0,
                 currentCard.getSuit(),
                 currentCard.getValue(),
                 p1->getScore()
@@ -42,7 +41,6 @@ void playGame(Player* p1, Player* p2, const trialInt& trialIndex) {
 
             trial.addMove({
                 moveNum++,
-                moveNum % 2 == 0,
                 curentCard.getSuit(),
                 curentCard.getValue(),
                 p2->getScore()
