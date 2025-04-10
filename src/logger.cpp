@@ -12,6 +12,10 @@ const std::vector<Move>& Trial::getMoves() const {
     return moves;
 }
 
+size_t Trial::getMoveCount() const {
+    return moves.size();
+}
+
 Trial& Trial::addMove(const Move& move) {
     moves.push_back(move);
     return *this;
@@ -26,6 +30,7 @@ Simulation::Simulation() {
 
 Simulation& Simulation::addTrial(const Trial& trial) {
     trials.push_back(trial);
+    totalMoves += trial.getMoveCount();
     return *this;
 }
 
@@ -41,19 +46,19 @@ std::string Simulation::getRow(const Logger::Move& move) const {
 }
 
 Simulation::~Simulation() noexcept(false) {
-    for (const auto& trial : trials) {
-        outFile << "RoundNum,Suit,Value,TotalPoints\n";
+    outFile << "TotalMoves,AvgMoves\n";
+    outFile << totalMoves << ',' << (totalMoves / static_cast<double>(trials.size())) << '\n';
+    outFile << "RoundNum,Suit,Value,TotalPoints\n";
 
+    for (const auto& trial : trials) {
         for (const auto& move : trial.getMoves())
             outFile << getRow(move);
-
-        outFile << std::endl;
     }
 
     outFile.close();
 
     if (outFile.fail())
-        throw LoggerException("Could not close the file.");
+        throw LoggerException("Could not close log.csv.");
 }
 
 }

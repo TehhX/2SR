@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 
+#include <2SRDefinitions.hpp>
 #include <player.hpp>
 #include <deck.hpp>
 #include <card.hpp>
@@ -26,12 +27,15 @@ public:
 
     const std::vector<Move>& getMoves() const;
 
+    size_t getMoveCount() const;
+
     Trial& addMove(const Move& move);
 };
 
 class Simulation {
     std::ofstream outFile;
-    std::vector<Trial> trials {{}};
+    std::vector<Trial> trials;
+    trialInt totalMoves { 0 };
 
 public:
     Simulation();
@@ -40,6 +44,7 @@ public:
 
     std::string getRow(const Logger::Move& move) const;
 
+    // Destructor will also write and close the file
     ~Simulation() noexcept(false);
 };
 

@@ -4,8 +4,7 @@
 #include <deck.hpp>
 #include <player.hpp>
 #include <logger.hpp>
-
-using trialInt = unsigned long long;
+#include <2SRDefinitions.hpp>
 
 Logger::Simulation simul {};
 
@@ -20,7 +19,7 @@ void playGame(Player* p1, Player* p2, const trialInt& trialIndex) {
     Deck deck {};
     
     int moveNum { 1 };
-    while (true) {
+    repeat {
         if (shouldContinue(p1, p2, deck)) {
             Card currentCard { deck.takeCard() };
             p1->takeTurn(currentCard);
@@ -78,6 +77,9 @@ try {
 
         playGame(p1, p2, trialIndex);
     }
+
+    delete p1;
+    delete p2;
     
     return 0;
 
