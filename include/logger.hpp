@@ -36,6 +36,7 @@ class Simulation {
     std::ofstream outFile;
     std::vector<Trial> trials;
     trialInt totalMoves { 0 };
+    trialInt p1Wins { 0 };
 
 public:
     Simulation();

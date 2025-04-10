@@ -6,12 +6,12 @@
 #include <logger.hpp>
 #include <2SRDefinitions.hpp>
 
+constexpr unsigned short endScore { 300 };
+
 Logger::Simulation simul {};
 
-bool shouldContinue(Player* p1, Player* p2, const Deck& deck) {
-    constexpr unsigned short endScore { 300 };
-
-    return (p1->getScore() < endScore) && (p2->getScore() < endScore) && (!deck.isEmpty());
+bool shouldContinue(Player* player, const Deck& deck) {
+    return (player->getScore() < endScore) && (!deck.isEmpty());
 }
 
 void playGame(Player* p1, Player* p2, const trialInt& trialIndex) {
@@ -19,8 +19,9 @@ void playGame(Player* p1, Player* p2, const trialInt& trialIndex) {
     Deck deck {};
     
     int moveNum { 1 };
+
     repeat {
-        if (shouldContinue(p1, p2, deck)) {
+        if (shouldContinue(p2, deck)) {
             Card currentCard { deck.takeCard() };
             p1->takeTurn(currentCard);
     
@@ -34,9 +35,9 @@ void playGame(Player* p1, Player* p2, const trialInt& trialIndex) {
         else
             break;
 
-        if (shouldContinue(p1, p2, deck)) {
+        if (shouldContinue(p1, deck)) {
             Card curentCard { deck.takeCard() };
-            p1->takeTurn(curentCard);
+            p2->takeTurn(curentCard);
 
             trial.addMove({
                 moveNum++,
@@ -71,12 +72,17 @@ try {
 
     Player *p1, *p2;
     trialInt trialIndex { 0 };
+
+    std::cout << "Beginning simulation...\n";
+
     while (trialIndex++ < trials) {
         p1 = createPlayer(numPlayers > 0);
         p2 = createPlayer(numPlayers > 1);
 
         playGame(p1, p2, trialIndex);
     }
+
+    std::cout << "Ending simulation.\n\n";
 
     delete p1;
     delete p2;

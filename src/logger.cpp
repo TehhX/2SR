@@ -1,4 +1,5 @@
 #include <sstream>
+#include <iostream>
 
 #include <2SRException.hpp>
 #include <logger.hpp>
@@ -29,8 +30,13 @@ Simulation::Simulation() {
 }
 
 Simulation& Simulation::addTrial(const Trial& trial) {
-    trials.push_back(trial);
     totalMoves += trial.getMoveCount();
+    
+    if (trial.getMoveCount() % 2 != 0)
+        ++p1Wins;
+
+    trials.push_back(trial);
+
     return *this;
 }
 
@@ -46,9 +52,11 @@ std::string Simulation::getRow(const Logger::Move& move) const {
 }
 
 Simulation::~Simulation() noexcept(false) {
-    outFile << "TotalMoves,AvgMoves\n";
-    outFile << totalMoves << ',' << (totalMoves / static_cast<double>(trials.size())) << '\n';
-    outFile << "RoundNum,Suit,Value,TotalPoints\n";
+    std::cout << "Writing data to log.csv...\n";
+
+    outFile << "TotalMoves,AvgMoves,P1Wins,P1WinRatio\n" <<
+               totalMoves << ',' << (totalMoves / static_cast<double>(trials.size())) << ',' << p1Wins << ',' << p1Wins / static_cast<double>(trials.size()) << '\n' <<
+               "RoundNum,Suit,Value,TotalPoints\n";
 
     for (const auto& trial : trials) {
         for (const auto& move : trial.getMoves())
@@ -56,6 +64,8 @@ Simulation::~Simulation() noexcept(false) {
     }
 
     outFile.close();
+
+    std::cout << "Finished writing to log.csv.\n";
 
     if (outFile.fail())
         throw LoggerException("Could not close log.csv.");
