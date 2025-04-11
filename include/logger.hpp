@@ -33,13 +33,16 @@ public:
 };
 
 class Simulation {
+    const littleInt logLevel;
+
     std::ofstream outFile;
+
     std::vector<Trial> trials;
     trialInt totalMoves { 0 };
     trialInt p1Wins { 0 };
 
 public:
-    Simulation();
+    Simulation(littleInt logLevel);
 
     Simulation& addTrial(const Trial& trial);
 

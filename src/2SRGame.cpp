@@ -8,13 +8,11 @@
 
 constexpr unsigned short endScore { 300 };
 
-Logger::Simulation simul {};
-
 bool shouldContinue(Player* player, const Deck& deck) {
     return (player->getScore() < endScore) && (!deck.isEmpty());
 }
 
-void playGame(Player* p1, Player* p2, const trialInt& trialIndex) {
+void playGame(Player* p1, Player* p2, const trialInt& trialIndex, Logger::Simulation& sim) {
     Logger::Trial trial { p1, p2 };
     Deck deck {};
     
@@ -50,14 +48,14 @@ void playGame(Player* p1, Player* p2, const trialInt& trialIndex) {
             break;
     }
 
-    simul.addTrial(trial);
+    sim.addTrial(trial);
 }
 
 int main(int argc, char* argv[]) {
 try {
 
-    if (argc != 3)
-        throw CLIInputException("Unexpected arguments, need: numTrials numPlayers.");
+    if (argc != 4)
+        throw CLIInputException("Unexpected arguments, need: numTrials numPlayers logLevel.");
 
     if (argv[1][0] == ' ' || argv[2][0] == ' ')
         throw CLIInputException("Remove all whitespace in CLI arguments.");
@@ -66,20 +64,25 @@ try {
     if (trials < 1 || trials % 1 != 0 || argv[1][0] == '-')
         throw CLIInputException("Bad numTrials, must be { nT in N | 1 <= nT <= ULL_MAX } and without whitespace.");
 
-    auto numPlayers { static_cast<unsigned short>(std::stoi(argv[2])) };
+    auto numPlayers { static_cast<littleInt>(std::stoi(argv[2])) };
     if (numPlayers > 2 || numPlayers % 1 != 0 || argv[2][0] == '-')
         throw CLIInputException("Bad numPlayers, must be { nP in W | 0 <= nP <= 2 }.");
+    
+    auto logLevel { static_cast<littleInt>(std::stoi(argv[3])) };
+    if (logLevel < 0 || logLevel > 2 || argv[3][0] == '-')
+        throw CLIInputException("Bad logLevel, must be { lL in W | 0 <= lL <= 2 }");
 
     Player *p1, *p2;
     trialInt trialIndex { 0 };
 
-    std::cout << "Beginning simulation...\n";
+    Logger::Simulation sim { logLevel };
 
+    std::cout << "Beginning simulation...\n";
     while (trialIndex++ < trials) {
         p1 = createPlayer(numPlayers > 0);
         p2 = createPlayer(numPlayers > 1);
 
-        playGame(p1, p2, trialIndex);
+        playGame(p1, p2, trialIndex, sim);
     }
 
     std::cout << "Ending simulation.\n\n";
