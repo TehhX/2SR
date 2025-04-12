@@ -6,7 +6,7 @@
 #include <logger.hpp>
 #include <2SRDefinitions.hpp>
 
-constexpr unsigned short endScore { 300 };
+constexpr littleInt endScore { 300 };
 
 bool shouldContinue(Player* player, const Deck& deck) {
     return (player->getScore() < endScore) && (!deck.isEmpty());
@@ -16,7 +16,7 @@ void playGame(Player* p1, Player* p2, const trialInt& trialIndex, Logger::Simula
     Logger::Trial trial { p1, p2 };
     Deck deck {};
     
-    int moveNum { 1 };
+    littleInt moveNum { 1 };
 
     repeat {
         if (shouldContinue(p2, deck)) {

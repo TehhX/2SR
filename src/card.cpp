@@ -23,7 +23,6 @@ Suit randSuit(Suit exclude) {
         static_cast<Suit>(2),
         static_cast<Suit>(3)
     };
-#include <cstdlib>
 
     possibleSuits.erase(possibleSuits.begin() + static_cast<int>(exclude));
 

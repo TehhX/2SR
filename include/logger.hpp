@@ -40,6 +40,7 @@ class Simulation {
     std::vector<Trial> trials;
     trialInt totalMoves { 0 };
     trialInt p1Wins { 0 };
+    trialInt firstMovePoints { 0 };
 
 public:
     Simulation(littleInt logLevel);
@@ -47,6 +48,8 @@ public:
     Simulation& addTrial(const Trial& trial);
 
     std::string getRow(const Logger::Move& move) const;
+
+    trialFloat perTrial(trialInt total) const;
 
     // Destructor will also write and close the file
     ~Simulation() noexcept(false);

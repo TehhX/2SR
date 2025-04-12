@@ -36,6 +36,8 @@ Simulation& Simulation::addTrial(const Trial& trial) {
     if (trial.getMoveCount() % 2 != 0)
         ++p1Wins;
 
+    firstMovePoints += trial.getMoves()[0].totalPoints;
+
     trials.push_back(trial);
 
     return *this;
@@ -52,14 +54,18 @@ std::string Simulation::getRow(const Logger::Move& move) const {
     return out.str();
 }
 
+trialFloat Simulation::perTrial(trialInt total) const {
+    return total / static_cast<trialFloat>(trials.size());
+}
+
 Simulation::~Simulation() noexcept(false) {
     std::cout << "Writing data to log.csv...\n";
 
     if (logLevel > 0)
-        outFile << "TotalMoves,AvgMoves,P1Wins,P1WinRatio\n" <<
-                    totalMoves << ',' << (totalMoves / static_cast<double>(trials.size())) << ',' << p1Wins << ',' << p1Wins / static_cast<double>(trials.size()) << '\n';
+        outFile << "TotalMoves,AvgMoves,P1Wins,P1WinRatio,TotalFirstMoveValue,AvgFirstMoveValue\n" <<
+            totalMoves << ',' << perTrial(totalMoves) << ',' << p1Wins << ',' << perTrial(p1Wins) << ',' << firstMovePoints << ',' << perTrial(firstMovePoints) << '\n';
     if (logLevel > 1) {
-        outFile << "RoundNum,Suit,Value,TotalPoints\n";
+        outFile << "\nRoundNum,Suit,Value,TotalPoints\n";
         for (const auto& trial : trials) {
             for (const auto& move : trial.getMoves())
                 outFile << getRow(move);
@@ -68,10 +74,10 @@ Simulation::~Simulation() noexcept(false) {
 
     outFile.close();
 
-    std::cout << "Finished writing to log.csv.\n";
-
     if (outFile.fail())
         throw LoggerException("Could not close log.csv.");
+    
+    std::cout << "Finished writing to log.csv.\n";
 }
 
 }
